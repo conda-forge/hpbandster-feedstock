@@ -7,24 +7,24 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/hpbandster-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/hpbandster-{{ version }}.tar.gz
   sha256: 49ffc32688155b509e62f3617b52ae15a96c9bff2c996a23df83f279106c5921
 
 build:
-  number: 0
+  number: 1
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv
 
 requirements:
   host:
     - pip
-    - python >=3.0
+    - python {{ python_min }}
   run:
     - configspace
     - netifaces
     - numpy
     - pyro4
-    - python >=3.0
+    - python >={{ python_min }}
     - scipy
     - serpent
     - statsmodels
@@ -37,6 +37,7 @@ test:
     - pip check
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/automl/HpBandSter
