@@ -11,23 +11,24 @@ source:
   sha256: 49ffc32688155b509e62f3617b52ae15a96c9bff2c996a23df83f279106c5921
 
 build:
-  number: 2
+  number: 3
   noarch: python
-  script: ${{ PYTHON }} -m pip install . -vv
+  script: ${{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
     - pip
     - python ${{ python_min }}.*
+    - setuptools
   run:
-    - configspace
-    - netifaces
-    - numpy
-    - pyro4
     - python >=${{ python_min }}
-    - scipy
+    - pyro4
     - serpent
+    - configspace
+    - numpy
     - statsmodels
+    - scipy
+    - netifaces
 
 tests:
   - python:
@@ -35,12 +36,6 @@ tests:
         - hpbandster
         - hpbandster.core
       python_version: ${{ python_min }}.*
-  - requirements:
-      run:
-        - pip
-        - python ${{ python_min }}.*
-    script:
-      - pip check
 
 about:
   summary: HyPerBAND on STERoids, a distributed Hyperband implementation with lots of room for improvement
